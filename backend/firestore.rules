@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+ match /databases/{database}/documents {
+  function member(center) { return request.auth != null && get(/databases/$(database)/documents/dcUsers/$(request.auth.uid)).data.active == true && get(/databases/$(database)/documents/dcUsers/$(request.auth.uid)).data.centerId == center; }
+  function staff(center) { return member(center) && get(/databases/$(database)/documents/dcUsers/$(request.auth.uid)).data.role in ['staff','admin']; }
+  match /dcUsers/{uid} { allow read: if request.auth != null && request.auth.uid == uid; allow write: if false;
+   match /private/{doc} { allow read: if request.auth != null && request.auth.uid == uid; allow write: if false; }
+  }
+  match /dcCenters/{center} {
+   allow read: if member(center); allow write: if false;
+   match /patients/{id} { allow read: if staff(center); allow write: if false; }
+   match /sessions/{id} { allow read: if staff(center) || (member(center) && request.auth.uid in resource.data.viewerUids); allow write: if false; }
+   match /notifications/{id} { allow read: if staff(center) || (member(center) && resource.data.recipientUid == request.auth.uid); allow write: if false; }
+   match /audit/{id} { allow read: if staff(center); allow write: if false; }
+   match /templates/{id} { allow read: if staff(center); allow write: if false; }
+   match /{other}/{id} { allow read,write: if false; }
+  }
+ }
+}

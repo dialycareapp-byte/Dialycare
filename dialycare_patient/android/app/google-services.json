@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "238488541629",
+    "project_id": "dialycare-backend-3f0ed",
+    "storage_bucket": "dialycare-backend-3f0ed.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238488541629:android:ea486b29dcfd2677c51ad4",
+        "android_client_info": {
+          "package_name": "com.example.dialycare_patient"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtbEoirc_BuSmKzCLq8Ux6PMsNBf3gr-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
